@@ -41,8 +41,6 @@ namespace SpellWork.DBC.Structures
         public short[] ImplicitTarget;
         public int SpellID;
 
-        //public SpellEffectScalingEntry SpellEffectScalingEntry { get; set; }
-
         public string MaxRadius
         {
             get

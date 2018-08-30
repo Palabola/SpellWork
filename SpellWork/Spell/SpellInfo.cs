@@ -126,7 +126,8 @@ namespace SpellWork.Spell
         #region SpellAuraOptions
         public int ProcCharges => AuraOptions?.ProcCharges ?? 0;
         public int ProcChance => AuraOptions?.ProcChance ?? 0;
-        public uint ProcFlags => AuraOptions?.ProcTypeMask[0] ?? 0;
+        public uint ProcFlags0 => AuraOptions?.ProcTypeMask[0] ?? 0;
+        public uint ProcFlags1 => AuraOptions?.ProcTypeMask[1] ?? 0;
         public int CumulativeAura => AuraOptions?.CumulativeAura ?? 0;
         public int ProcCooldown => AuraOptions?.ProcCategoryRecovery ?? 0;
         #endregion
@@ -173,19 +174,40 @@ namespace SpellWork.Spell
         public int InterruptFlags => Interrupts?.InterruptFlags ?? 0;
         #endregion
 
-        public string ProcInfo
+        public string ProcInfo0
         {
             get
             {
                 var i = 0;
                 var sb = new StringBuilder();
-                var proc = ProcFlags;
-                while (proc != 0)
+                var proc0 = ProcFlags0;
+
+                while (proc0 != 0)
                 {
-                    if ((proc & 1) != 0)
+                    if ((proc0 & 1) != 0)
                         sb.AppendFormatLine("  {0}", SpellEnums.ProcFlagDesc[i]);
                     ++i;
-                    proc >>= 1;
+                    proc0 >>= 1;
+                }
+
+                return sb.ToString();
+            }
+        }
+
+        public string ProcInfo1
+        {
+            get
+            {
+                var i = 0;
+                var sb = new StringBuilder();
+                var proc1 = ProcFlags1;
+
+                while (proc1 != 0)
+                {
+                    if ((proc1 & 1) != 0)
+                        sb.AppendFormatLine("  {0}", SpellEnums.ProcFlagDesc2[i]);
+                    ++i;
+                    proc1 >>= 1;
                 }
 
                 return sb.ToString();
@@ -558,14 +580,45 @@ namespace SpellWork.Spell
                 rtb.SetDefaultStyle();
             }
 
-            if (ProcFlags != 0)
+            if (ProcFlags0 != 0 && ProcFlags1 == 0)
             {
                 rtb.SetBold();
-                rtb.AppendFormatLine("Proc flag 0x{0:X8}, chance: {1}%, charges: {2}, cooldown: {3}",
-                    ProcFlags, ProcChance, ProcCharges, ProcCooldown);
+                rtb.AppendFormatLine("ProcFlags0: 0x{0:X8}, chance: {1}%, charges: {2}, cooldown: {3}",
+                    ProcFlags0, ProcChance, ProcCharges, ProcCooldown);
                 rtb.SetDefaultStyle();
                 rtb.AppendFormatLine(Separator);
-                rtb.AppendText(ProcInfo);
+                rtb.SetBold();
+                rtb.AppendFormatLine("ProcFlags0:");
+                rtb.SetDefaultStyle();
+                rtb.AppendText(ProcInfo0);
+            }
+            else if (ProcFlags0 == 0 && ProcFlags1 != 0)
+            {
+                rtb.SetBold();
+                rtb.AppendFormatLine("ProcFlags1: 0x{0:X8}, chance: {1}%, charges: {2}, cooldown: {3}",
+                    ProcFlags1, ProcChance, ProcCharges, ProcCooldown);
+                rtb.SetDefaultStyle();
+                rtb.AppendFormatLine(Separator);
+                rtb.SetBold();
+                rtb.AppendFormatLine("ProcFlags1:");
+                rtb.SetDefaultStyle();
+                rtb.AppendText(ProcInfo1);
+            }
+            else if (ProcFlags0 != 0 && ProcFlags1 != 0)
+            {
+                rtb.SetBold();
+                rtb.AppendFormatLine("ProcFlags0: 0x{0:X8}, ProcFlags1: 0x{1:X8}, chance: {2}%, charges: {3}, cooldown: {4}",
+                    ProcFlags0, ProcFlags1, ProcChance, ProcCharges, ProcCooldown);
+                rtb.SetDefaultStyle();
+                rtb.AppendFormatLine(Separator);
+                rtb.SetBold();
+                rtb.AppendFormatLine("ProcFlags0:");
+                rtb.SetDefaultStyle();
+                rtb.AppendText(ProcInfo0);
+                rtb.SetBold();
+                rtb.AppendFormatLine("ProcFlags1:");
+                rtb.SetDefaultStyle();
+                rtb.AppendText(ProcInfo1);
             }
             else
                 rtb.AppendFormatLine("Chance = {0}, charges - {1}", ProcChance, ProcCharges);
@@ -742,11 +795,26 @@ namespace SpellWork.Spell
                     rtb.AppendFormatLine("   Description: {0}", triggerSpell.Description);
                     rtb.AppendFormatLine("   ToolTip: {0}", triggerSpell.Tooltip);
                     rtb.SetDefaultStyle();
-                    if (triggerSpell.ProcFlags != 0)
+                    if (triggerSpell.ProcFlags0 != 0 && triggerSpell.ProcFlags1 == 0)
                     {
                         rtb.AppendFormatLine("Charges - {0}", triggerSpell.ProcCharges);
                         rtb.AppendLine(Separator);
-                        rtb.AppendLine(triggerSpell.ProcInfo);
+                        rtb.AppendLine(triggerSpell.ProcInfo0);
+                        rtb.AppendLine(Separator);
+                    }
+                    else if (triggerSpell.ProcFlags0 == 0 && triggerSpell.ProcFlags1 != 0)
+                    {
+                        rtb.AppendFormatLine("Charges - {0}", triggerSpell.ProcCharges);
+                        rtb.AppendLine(Separator);
+                        rtb.AppendLine(triggerSpell.ProcInfo1);
+                        rtb.AppendLine(Separator);
+                    }
+                    else if (triggerSpell.ProcFlags0 != 0 && triggerSpell.ProcFlags1 != 0)
+                    {
+                        rtb.AppendFormatLine("Charges - {0}", triggerSpell.ProcCharges);
+                        rtb.AppendLine(Separator);
+                        rtb.AppendLine(triggerSpell.ProcInfo0);
+                        rtb.AppendLine(triggerSpell.ProcInfo1);
                         rtb.AppendLine(Separator);
                     }
                 }

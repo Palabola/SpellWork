@@ -346,7 +346,7 @@ namespace SpellWork.Forms
             spell.Write(_rtbProcSpellInfo);
 
             _cbProcSpellFamilyTree.SelectedValue = spell.SpellFamilyName;
-            _clbProcFlags.SetCheckedItemFromFlag((uint)spell.ProcFlags);
+            _clbProcFlags.SetCheckedItemFromFlag(spell.ProcFlags1);
             _clbSchools.SetCheckedItemFromFlag(spell.SchoolMask);
             _cbProcFitstSpellFamily.SelectedValue = spell.SpellFamilyName;
             _tbPPM.Text = @"0"; // need correct value
