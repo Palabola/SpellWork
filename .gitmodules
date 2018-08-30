@@ -1,0 +1,3 @@
+[submodule "CascStorageLib"]
+	path = CascStorageLib
+	url = https://github.com/Seyden/CascStorageLib.git
