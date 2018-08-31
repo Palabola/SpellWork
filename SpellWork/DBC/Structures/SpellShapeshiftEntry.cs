@@ -7,8 +7,8 @@ namespace SpellWork.DBC.Structures
         public int SpellID;
         public sbyte StanceBarOrder;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-        public int[] ShapeshiftExclude;
+        public uint[] ShapeshiftExclude;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-        public int[] ShapeshiftMask;
+        public uint[] ShapeshiftMask;
     }
 }

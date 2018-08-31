@@ -28,7 +28,7 @@ namespace SpellWork.DBC.Structures
         public float PriceVariance;
         public float PriceRandomValue;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-        public int Flags;
+        public uint Flags;
         public int OppositeFactionItemID;
         public ushort ItemNameDescriptionID;
         public ushort RequiredTransmogHoliday;

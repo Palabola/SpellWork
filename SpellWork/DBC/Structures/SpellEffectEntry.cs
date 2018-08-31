@@ -38,7 +38,7 @@ namespace SpellWork.DBC.Structures
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
         public uint[] EffectSpellClassMask;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-        public short[] ImplicitTarget;
+        public ushort[] ImplicitTarget;
         public int SpellID;
 
         public string MaxRadius

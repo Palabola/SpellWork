@@ -6,7 +6,7 @@ namespace SpellWork.DBC.Structures
     {
         public string Name;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-        public int[] Param;
+        public uint[] Param;
         public sbyte Effect;
         public uint FullScreenEffectID;
         public ushort LightParamsID;

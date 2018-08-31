@@ -8,6 +8,6 @@ namespace SpellWork.DBC.Structures
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 8)]
         public int[] Reagent;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 8)]
-        public short[] ReagentCount;
+        public ushort[] ReagentCount;
     }
 }
